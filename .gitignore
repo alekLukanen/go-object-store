@@ -8,6 +8,9 @@
 # data directory
 objectData
 
+# builds
+go_object_store
+
 # Test binary, built with `go test -c`
 *.test
 
