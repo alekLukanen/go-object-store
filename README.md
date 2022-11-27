@@ -27,3 +27,11 @@ GET /object/<object-key> - fetch an object's data
 DELETE /object/<object-key> - remove an object
 ```
 
+## Docker Usage
+
+You can also build and run the service using docker
+```
+docker build -t go-object-store .
+docker run -d -v  $(pwd)/objectData:/usr/src/app/objectData -p 3000:3000 go-object-store
+```
+
