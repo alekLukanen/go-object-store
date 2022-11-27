@@ -15,10 +15,17 @@ import (
 )
 
 var PORT = 3000
-var dataDirectory = "./objectData"
+var DATADIRECTORY = "./objectData"
 
 func main() {
 	fmt.Println("- Initializing the object storage")
+
+	if !doesFileExist(DATADIRECTORY) {
+		makeDirError := os.MkdirAll(DATADIRECTORY, os.ModePerm)
+		if makeDirError != nil {
+			panic(makeDirError)
+		}
+	}
 
 	setupEndpoints()
 
@@ -77,7 +84,7 @@ func putObject(w http.ResponseWriter, r *http.Request, objectKey string, fileNam
 		return 
 	}
 
-	filePath := fmt.Sprintf("%s/%s", dataDirectory, fileName)
+	filePath := fmt.Sprintf("%s/%s", DATADIRECTORY, fileName)
 	fileWriteError := os.WriteFile(filePath, body, 0644)
     if fileWriteError != nil {
         panic(fileWriteError)
@@ -95,7 +102,7 @@ func putObject(w http.ResponseWriter, r *http.Request, objectKey string, fileNam
 
 func getObject(w http.ResponseWriter, r *http.Request, fileName string) {
 
-	filePath := fmt.Sprintf("%s/%s", dataDirectory, fileName)
+	filePath := fmt.Sprintf("%s/%s", DATADIRECTORY, fileName)
 
 	if !doesFileExist(filePath) {
 		w.WriteHeader(http.StatusNotFound)
@@ -112,7 +119,7 @@ func getObject(w http.ResponseWriter, r *http.Request, fileName string) {
 
 func deleteObject(w http.ResponseWriter, r *http.Request, fileName string) {
 
-	filePath := fmt.Sprintf("%s/%s", dataDirectory, fileName)
+	filePath := fmt.Sprintf("%s/%s", DATADIRECTORY, fileName)
 	if !doesFileExist(filePath) {
 		w.WriteHeader(http.StatusNotFound)
 		return
