@@ -9,7 +9,7 @@ import (
 	"errors"
 	"strings"
 	"crypto/md5"
-    "encoding/hex"
+	"encoding/hex"
 	"encoding/json"
 	"github.com/gorilla/mux"
 )
@@ -45,7 +45,7 @@ func alive(w http.ResponseWriter, r *http.Request) {
 }
 
 
-	
+
 type baseResponse struct {
     ObjectKey string
     FileName string
@@ -69,7 +69,7 @@ func (obj objectHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		case "DELETE": deleteObject(w, r, fileName)
 		default: {
 			w.WriteHeader(http.StatusInternalServerError)
-			return 
+			return
 		}
 	}
 }
@@ -81,7 +81,7 @@ func putObject(w http.ResponseWriter, r *http.Request, objectKey string, fileNam
 	body, bodyReadError := io.ReadAll(r.Body)
 	if bodyReadError != nil {
 		w.WriteHeader(http.StatusInternalServerError)
-		return 
+		return
 	}
 
 	filePath := fmt.Sprintf("%s/%s", DATADIRECTORY, fileName)
@@ -132,7 +132,6 @@ func deleteObject(w http.ResponseWriter, r *http.Request, fileName string) {
 	}
 
 }
-
 
 func doesFileExist(filePath string) bool {
 
